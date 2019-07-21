@@ -1,0 +1,25 @@
+language: node_js
+node_js: stable
+
+install:
+  - npm install -g hexo
+  - npm install -g hexo-cli
+  - npm install
+
+script:
+  - hexo clean
+  - hexo g
+
+after_success:
+  - git config user.name "ck505778675"
+  - git config user.email "505778675@qq.com"
+  - sed -i "s/gh_token/${GH_TOKEN}/g" _config.yml #使用travisCI中配置的token替换掉_config.yml中对应的占位符
+  - hexo deploy
+
+branches:
+  only:
+    - hexo
+
+env:
+ global:
+   - GH_REF: github.com/ck505778675/ck505778675.github.io.git
