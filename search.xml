@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>使用elasticsearch-dump备份和还原elasticsearch</title>
+      <link href="/2019/08/06/%E5%90%8E%E7%AB%AF/elasticsearch-dump/"/>
+      <url>/2019/08/06/%E5%90%8E%E7%AB%AF/elasticsearch-dump/</url>
+      
+        <content type="html"><![CDATA[<h1 id="本文主要介绍使用docker版的elasticsearch-dump迁移elasticsearch数据"><a href="#本文主要介绍使用docker版的elasticsearch-dump迁移elasticsearch数据" class="headerlink" title="本文主要介绍使用docker版的elasticsearch-dump迁移elasticsearch数据"></a>本文主要介绍使用docker版的elasticsearch-dump迁移elasticsearch数据</h1><h2 id="准备Docker镜像"><a href="#准备Docker镜像" class="headerlink" title="准备Docker镜像"></a>准备Docker镜像</h2><pre class=" language-bash"><code class="language-bash">$ docker pull taskrabbit/elasticsearch-dump</code></pre><h2 id="使用文件备份和还原数据"><a href="#使用文件备份和还原数据" class="headerlink" title="使用文件备份和还原数据"></a>使用文件备份和还原数据</h2><h3 id="保存文件备份"><a href="#保存文件备份" class="headerlink" title="保存文件备份"></a>保存文件备份</h3><pre class=" language-bash"><code class="language-bash">$ docker run --net<span class="token operator">=</span>host --rm -ti -v /tmp:/tmp taskrabbit/elasticsearch-dump \  --input<span class="token operator">=</span>http://localhost:9200/my_index \  --output<span class="token operator">=</span>/tmp/my_index_mapping.json \  --type<span class="token operator">=</span>mapping$ docker run --net<span class="token operator">=</span>host --rm -ti -v /tmp:/tmp taskrabbit/elasticsearch-dump \  --input<span class="token operator">=</span>http://localhost:9200/my_index \  --output<span class="token operator">=</span>/tmp/my_index_data.json \  --type<span class="token operator">=</span>data</code></pre><h3 id="从文件备份中还原数据"><a href="#从文件备份中还原数据" class="headerlink" title="从文件备份中还原数据"></a>从文件备份中还原数据</h3><pre class=" language-bash"><code class="language-bash">$ docker run --net<span class="token operator">=</span>host --rm -ti -v /tmp:/tmp taskrabbit/elasticsearch-dump \  --input<span class="token operator">=</span>/tmp/my_index_mapping.json \  --output<span class="token operator">=</span>http://localhost:9200/my_index \  --type<span class="token operator">=</span>mapping$ docker run --net<span class="token operator">=</span>host --rm -ti -v /tmp:/tmp taskrabbit/elasticsearch-dump \  --input<span class="token operator">=</span>/tmp/my_index_data.json \  --output<span class="token operator">=</span>http://localhost:9200/my_index \  --type<span class="token operator">=</span>data</code></pre><h3 id="将数据直接迁移到另外一个实例"><a href="#将数据直接迁移到另外一个实例" class="headerlink" title="将数据直接迁移到另外一个实例"></a>将数据直接迁移到另外一个实例</h3><pre class=" language-bash"><code class="language-bash">$ docker run  --rm -ti  taskrabbit/elasticsearch-dump \  --input<span class="token operator">=</span>http://production.es.com:9200/my_index \  --output<span class="token operator">=</span>http://newnodes.es.com:9200/my_index \  --type<span class="token operator">=</span>mapping$ docker run --rm -ti elasticdump \  --input<span class="token operator">=</span>http://production.es.com:9200/my_index \  --output<span class="token operator">=</span>http://newnodes.es.com:9200/my_index \  --type<span class="token operator">=</span>data</code></pre><p>参数说明：<br>–net=host  将容器的网络配置设置与宿主机一样，可以通过localhost:9200来访问本机的elasticsearch<br>-v /tmp:/tmp 设置备份文件的挂载目录</p><p>参考文章：<br><a href="https://khanhicetea.com/post/backup-and-restore-elasticsearch-using-docker/" target="_blank" rel="noopener">使用Docker备份和还原ElasticSearch数据库</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> elasticsearch </tag>
+            
+            <tag> elasticsearch-dump </tag>
+            
+            <tag> docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2019/08/06/hello-world/"/>
+      <url>/2019/08/06/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
